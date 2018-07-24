@@ -1,0 +1,5 @@
+解决git 中clone命令报错
+1 bash.exe输入命令ssh-keygen -t rsa -C "GITHUBXIAO037"
+2 /Users/username/.ssh/id_rsa目录下找到id_rsa.pub并打开(此处的username是电脑主机名)
+3 登录https://github.com/账户，在账户下setting的SSH下添加id_rsa.pub中的内容
+4 bash.exe中输入ssh -T git@github.com
