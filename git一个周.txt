@@ -1,0 +1,345 @@
+﻿创建新文件夹，打开，然后执行 
+	git init
+以创建新的 git 仓库。
+
+检出仓库
+
+执行如下命令以创建一个本地仓库的克隆版本：
+	git clone /path/to/repository 
+如果是远端服务器上的仓库：
+git clone username@host:/path/to/repository
+git clone git@github.com:GITHUBXIAO037/ForAlone.git
+
+
+git 维护的三棵“树”组成。第一个是你的 工作目录，它持有实际文件；第二个是缓存区（Index），它像个缓存区域，临时保存你的改动；最后是 HEAD，指向你最近一次提交后的结果。
+
+你可以计划改动（把它们添加到缓存区），使用如下命令：
+git add <filename>
+git add *
+ 这是 git 基本工作流程的第一步；使用如下命令以实际提交改动：
+git commit -m "代码提交信息"
+ 现在，你的改动已经提交到了 HEAD，但是还没到你的远端仓库。  
+
+
+你的改动现在已经在本地仓库的 HEAD 中了。执行如下命令以将这些改动提交到远端仓库：
+git push origin master
+可以把 master 换成你想要推送的任何分支。 
+
+ 如果你还没有克隆现有仓库，并欲将你的仓库连接到某个远程服务器，你可以使用如下命令添加：
+git remote add origin <server>
+ 如此你就能够将你的改动推送到所添加的服务器上去了。
+
+ 分支是用来将特性开发绝缘开来的。在你创建仓库的时候，master 是“默认的”。在其他分支上进行开发，完成后再将它们合并到主分支上。 
+ 
+创建一个叫做“feature_x”的分支，并切换过去：
+git checkout -b feature_x
+ 切换回主分支：
+git checkout master
+ 再把新建的分支删掉：
+git branch -d feature_x
+ 除非你将分支推送到远端仓库，不然该分支就是 不为他人所见的：
+git push origin <branch>
+
+
+要更新你的本地仓库至最新改动，执行：
+git pull
+ 以在你的工作目录中 获取（fetch） 并 合并（merge） 远端的改动。
+ 要合并其他分支到你的当前分支（例如 master），执行：
+git merge <branch>
+ 两种情况下，git 都会尝试去自动合并改动。不幸的是，自动合并并非次次都能成功，并可能导致 冲突（conflicts）。 这时候就需要你修改这些文件来手动合并这些 冲突（conflicts） 了。改完之后，你需要执行如下命令以将它们标记为合并成功：
+git add <filename>
+ 在合并改动之前，也可以使用如下命令查看：
+git diff <source_branch> <target_branch> 
+
+标签
+
+在软件发布时创建标签，是被推荐的。这是个旧有概念，在 SVN 中也有。可以执行如下命令以创建一个叫做 1.0.0 的标签：
+git tag 1.0.0 1b2e1d63ff
+1b2e1d63ff 是你想要标记的提交 ID 的前 10 位字符。使用如下命令获取提交 ID：
+git log
+ 你也可以用该提交 ID 的少一些的前几位，只要它是唯一的。 
+
+ 替换本地改动
+
+假如你做错事（自然，这是不可能的），你可以使用如下命令替换掉本地改动：
+git checkout -- <filename>
+ 此命令会使用 HEAD 中的最新内容替换掉你的工作目录中的文件。已添加到缓存区的改动，以及新文件，都不受影响。 
+
+假如你想要丢弃你所有的本地改动与提交，可以到服务器上获取最新的版本并将你本地主分支指向到它：
+git fetch origin
+git reset --hard origin/master 
+
+
+有用的贴士
+
+内建的图形化 git：
+gitk
+ 彩色的 git 输出：
+git config color.ui true
+ 显示历史记录时，只显示一行注释信息：
+git config format.pretty oneline
+ 交互地添加文件至缓存区：
+git add -i 
+
+
+
+-===============================================-
+https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/
+安装
+	linux下：apt-get install git
+
+配置
+git config --global user.name "yourName"
+git config --global user.email "email"
+
+版本库
+repository(目录)
+	创建版本库 mkdir gitspace
+	初始化版本库 git init (.git文件)
+
+	*所有的版本控制系统，只能跟踪文本文件的改动
+
+	git repository 目录下创建文本文件
+写文件	lastMe.mid
+
+	For Me This is a Start
+	And I am learning git 
+
+添加文件到暂存区	git add lastMe.mid
+
+提交文件到repository	git commit -m "commit one"
+
+管理修改：修改应该被添加到暂存区，然后提交
+
+
+/******************************************************************/
+echo "# ForAlone" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/GITHUBXIAO037/ForAlone.git
+git remote add origin git@github.com:GITHUBXIAO037/ForAlone.git
+git push -u origin master
+/******************************************************************/
+/******************************************************************/
+git remote add origin https://github.com/GITHUBXIAO037/ForAlone.git
+git remote add origin git@github.com:GITHUBXIAO037/ForAlone.git
+git push -u origin master
+/******************************************************************/
+
+	git status 查看文件状态
+	git diff 查看修改内容
+	git log 查看日志
+	在Git中，用HEAD表示当前版本，HEAD^表示上一个版本
+	回退到上一版本git reset --hard HEAD^
+	git reflog 查看历史版本
+
+
+	工作目录是对项目的某个版本独立提取出来的内容
+	暂存区域是一个文件，保存了下次将提交的文件列表信息
+
+	工作目录 --- 暂存区 --- GIT仓库
+
+	配置文件：
+		/etc/gitconfig	系统用户上的统用设置
+		~/.gitconfig 当前用户设置
+		.git/config 当前仓库设置
+
+		针对特定的版本配置时，git config user.name [email] 
+		也可以全局配置
+
+		配置编辑器：git config --global core.editor vim
+		检查配置信息：git config --list
+		检查某一项配置：git config user.name
+
+		获取帮助：
+		git help config[命令]
+
+		git仓库：现有目录作为仓库或从git仓库导入仓库
+
+		指定初始化现有目录：git init 
+		跟踪文件：git add fileName
+		提交文件：git commit -m "备注说明信息"
+
+		从git仓库导入：git clone [url] 克隆每个文件的每个版本
+		git clone https://github.com/GITHUBXIAO037/ProgramFree
+		将ProgramFree仓库克隆到本地ProgramFree目录下
+
+		文件的两个状态：已经add(trace)和未add(trace)
+		文件被修改后可以提交到暂存区，然后再提交到仓库中
+
+		检查当前文件的状态：git status
+		若working directory clean ，则工作目录没有被修改的文件
+		简化状态信息：git status -s(short)
+
+		?? 新添加的未跟踪文件
+		A 新添加到暂存区中的文件
+		M 修改过的文件
+		MM 左边(first) 修改过已经添加到暂存区的修改过的文件，右边表示未添加到暂存区的修改过的文件
+
+		忽略文件：.gitignore ,列出要忽略的文件模式
+			所有空行或者以 ＃ 开头的行都会被 Git 忽略。 
+			•可以使用标准的 glob 模式匹配。
+			•匹配模式可以以（/）开头防止递归。
+			•匹配模式可以以（/）结尾指定目录。
+			•要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。 
+
+		文件忽略的表：https://github.com/github/gitignore 
+
+		git diff 比较文件不同的地方
+		git diff --cached 查看已经暂存的内容
+
+		在VMware下使用github时，从github服务器上下载一个仓库： git clone 路径，然后从本地上传和下载git push -u origin master[分支名]，同步到GitHub账户
+		或者 git remote add origin git@github.com:GITHUBXIAO037/本地仓库.git，git push -u origin master[分支名]，前提是在Github上有这个仓库
+
+		git checkout -- sya.txt 恢复到上一次的提交的状态
+		git reset HEAD file 撤销暂存区的
+
+		git rm file
+		git commit -m "remove the file in the repository"
+
+		git checkout -- file [working directary ckeck out the file from repository]
+
+		git push origin master 将本地的master分支推送到远程Github上，并关联起来
+
+		git remote add origin git@server-name:path/repo-name.git 关联分支
+		git clone git@server-name:path/repo-name.git 克隆分支
+
+		以上两个操作做了之后，就可以 git push -u origin master 推送新的修改
+
+													分支
+		分支创建、切换和删除，分支合并
+		创建分支：git branch <name>
+		创建一个分支并切换过去：git checkout -b featurexiao
+		git branch：查看当前分支【当前分支有一个星号表示*】
+
+		分支合并：
+			1 切换回 master 分支
+
+			  git checkout master
+
+			2 合并分支，将指定的分支合并到当前分支
+			  git merge 分支名
+
+		删除指定的分支：
+		git branch -d 分支名
+
+		切换分支后，HEAD指向当前分支，创建分支后HEAD并不会切换过去
+
+		合并分支时候的冲突，解决冲突后，再提交，合并完成，合并后再删除分支
+		Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容
+		
+		图形化分支 git log --graph --pretty=oneline --abbrev-commit
+
+		git log --graph可以看到合并分支图
+
+		git Fast forward模式下，删除分支后会丢失分支信息
+
+		git merge --no-ff -m "commit" 分支名,--no-ff 表示禁用Fast forward，此时在 git log 日志记录中会有分支记录信息
+
+		分支管理策略：master 分支是稳定的版本，dev[开发分支]是不稳定的版本。
+
+
+		git stash 保存当前分支的工作现场
+		git stash list 查看stash 列表
+
+		恢复工作现场：
+		1 git stash apply，恢复后需要删除 git stash drop
+		2 git stash pop，恢复后同样需要删除 git stash drop
+
+		*分支创建的时候，总是在当前分支上分叉，合并的时候，指定分支合并
+
+		为分支添加新功能时，新建一个分支开发
+		强行删除未合并的分支：git branch -D feature-vulcan
+
+		使用pull时，先将本地的目录 git init 一下
+		git pull https://github.com/GITHUBXIAO037/Lua
+
+		推送分支：
+		git push origin[远程分支名] master[本地分支名]
+		git push -u origin master
+		远程仓库的名称：git remote
+
+		抓取分支：git checkout -b dev[本地分支名] origin/dev[远程分支名]
+		在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致
+
+		指定远程和本地分支关联：git branch --set-upstream branch-name origin/branch-name
+
+		有冲突的时候需要手动解决一下，再远程推送
+
+		打标签：
+			指向某个commit的指针，与HEAD不同，HEAD可以移动，但是标签不可以移动；
+			标签是一个有意义的名字，与某个commit绑定在一起的
+
+		创建标签：
+			切换到要打标签的分支，git tag <tag_name>
+		查看标签的状态：
+			git tag
+
+			*标签默认是打在最新的commit上的
+
+			还可以对特定的commit打标签，找到commit id：git tag tag_name commit_id
+			git log --pretty=oneline --abbrev-commit 查找历史的commit id
+
+			查看标签的信息
+				git show tag_name
+
+			创建有说明的标签
+				git tag -a tag_name -m "说明信息" commit_id
+
+			删除标签：
+				标签是打在本地的，使用 git tag -d tag_name 删除标签名
+
+			推送标签：
+				git push 远程分支名 tag_name
+
+				一次性推送远程所有本地的分支：git push origin[远程标签名] --tags
+
+			删除远程标签名：
+				先删除本地标签名，再删除远程标签名：git push origin :refs/tags/远程标签名
+
+	再github上参与开源项目：
+		将开源项目Fork到自己的账号下，然后修改推送，当然是推送到自己的分支上
+
+	自定义git仓库
+		git 显示颜色：git config --global color.ui true
+		忽略特殊文件：.gitignore，在其中配置一下要忽略文件的格式即可[https://github.com/github/gitignore]
+		配置好.gitignore文件后，需要提交到git
+
+		可以使用 -f 参数选项将要忽视的文件强制添加到git中：git add -f filename
+
+		*可以对 .gitignore 文件做版本管理
+
+	git 配置别名：
+
+		git config --global alias.st 'status'
+		git config --global alias.ci 'commit'
+		git config --global alias.br 'branch'
+		git config --global alias.co 'checkout'
+
+		git config --global alias.unstage 'reset HEAD'
+
+	显示最后一次提交信息：
+		git config --global alias.last 'log -1'
+
+	git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+	--global 选项是对当前用户起作用的
+
+	删除别名的时候，到.git/config目录下删除对应的别名
+
+	当前用户的git配置文件在：~/.gitconfig
+
+
+	搭建自己的服务器：
+		选择一个Ubuntu
+		1 sudo apt-get install git
+		2 sudo adduser git[账号名]
+		3 创建证书登录
+			把所有公钥导入到/home/git/.ssh/authorized_keys文件里
+		4 初始化git仓库 git init --bare sample.git
+		5 禁用shell登陆 修改/etc/passwd 将 git:x:1001:1001:,,,:/home/git:/bin/bash 替换为 git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+
+		6 克隆远程仓库 git clone git[账号名]@server[主机名]:/srv/sample.git[路径名]
+
+	后续git操作：http://www.yiibai.com/git/git_push.html
